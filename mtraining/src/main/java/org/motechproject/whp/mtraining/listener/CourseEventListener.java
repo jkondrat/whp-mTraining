@@ -2,7 +2,7 @@ package org.motechproject.whp.mtraining.listener;
 
 import org.motechproject.event.MotechEvent;
 import org.motechproject.event.listener.annotations.MotechListener;
-import org.motechproject.mtraining.constants.MTrainingEventConstants;
+import org.motechproject.whp.mtraining.constants.MTrainingEventConstants;
 import org.motechproject.whp.mtraining.ivr.CoursePublisher;
 import org.motechproject.whp.mtraining.reports.CourseReporter;
 import org.springframework.beans.factory.annotation.Autowired;

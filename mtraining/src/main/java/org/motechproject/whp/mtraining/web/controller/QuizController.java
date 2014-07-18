@@ -1,7 +1,7 @@
 package org.motechproject.whp.mtraining.web.controller;
 
-import org.motechproject.mtraining.dto.ContentIdentifierDto;
-import org.motechproject.mtraining.service.QuizService;
+import org.motechproject.whp.mtraining.dto.ContentIdentifierDto;
+import org.motechproject.whp.mtraining.service.QuizService;
 import org.motechproject.whp.mtraining.domain.Provider;
 import org.motechproject.whp.mtraining.reports.QuizReporter;
 import org.motechproject.whp.mtraining.service.impl.ProviderServiceImpl;

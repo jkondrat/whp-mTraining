@@ -1,11 +1,11 @@
 package org.motechproject.whp.mtraining.service.impl;
 
-import org.motechproject.mtraining.dto.ContentIdentifierDto;
-import org.motechproject.mtraining.dto.CourseConfigurationDto;
-import org.motechproject.mtraining.dto.CourseDto;
-import org.motechproject.mtraining.dto.LocationDto;
-import org.motechproject.mtraining.service.CourseConfigurationService;
-import org.motechproject.mtraining.service.CourseService;
+import org.motechproject.whp.mtraining.dto.ContentIdentifierDto;
+import org.motechproject.whp.mtraining.dto.CourseConfigurationDto;
+import org.motechproject.whp.mtraining.dto.CourseDto;
+import org.motechproject.whp.mtraining.dto.LocationDto;
+import org.motechproject.whp.mtraining.service.CourseConfigurationService;
+import org.motechproject.whp.mtraining.service.CourseService;
 import org.motechproject.security.model.UserDto;
 import org.motechproject.security.service.MotechUserService;
 import org.motechproject.whp.mtraining.csv.domain.Content;

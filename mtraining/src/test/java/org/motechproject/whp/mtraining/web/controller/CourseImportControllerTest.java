@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.motechproject.mtraining.dto.ContentIdentifierDto;
+import org.motechproject.whp.mtraining.dto.ContentIdentifierDto;
 import org.motechproject.whp.mtraining.csv.parser.CsvParser;
 import org.motechproject.whp.mtraining.csv.request.CourseCsvRequest;
 import org.motechproject.whp.mtraining.csv.response.CsvImportResponse;

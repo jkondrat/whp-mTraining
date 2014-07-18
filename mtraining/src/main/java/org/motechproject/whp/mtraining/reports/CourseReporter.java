@@ -1,8 +1,8 @@
 package org.motechproject.whp.mtraining.reports;
 
-import org.motechproject.mtraining.dto.ContentIdentifierDto;
-import org.motechproject.mtraining.dto.CourseDto;
-import org.motechproject.mtraining.service.CourseService;
+import org.motechproject.whp.mtraining.dto.ContentIdentifierDto;
+import org.motechproject.whp.mtraining.dto.CourseDto;
+import org.motechproject.whp.mtraining.service.CourseService;
 import org.motechproject.whp.mtraining.domain.Course;
 import org.motechproject.whp.mtraining.repository.AllCourses;
 import org.springframework.beans.factory.annotation.Autowired;

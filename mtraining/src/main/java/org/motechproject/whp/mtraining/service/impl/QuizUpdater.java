@@ -1,7 +1,7 @@
 package org.motechproject.whp.mtraining.service.impl;
 
-import org.motechproject.mtraining.dto.QuizDto;
-import org.motechproject.mtraining.service.QuizService;
+import org.motechproject.whp.mtraining.dto.QuizDto;
+import org.motechproject.whp.mtraining.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

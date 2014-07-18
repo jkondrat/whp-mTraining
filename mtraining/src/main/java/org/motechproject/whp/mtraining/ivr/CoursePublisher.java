@@ -1,10 +1,10 @@
 package org.motechproject.whp.mtraining.ivr;
 
 import org.joda.time.DateTime;
-import org.motechproject.mtraining.dto.ContentIdentifierDto;
-import org.motechproject.mtraining.dto.CourseDto;
-import org.motechproject.mtraining.service.CourseService;
-import org.motechproject.mtraining.util.ISODateTimeUtil;
+import org.motechproject.whp.mtraining.dto.ContentIdentifierDto;
+import org.motechproject.whp.mtraining.dto.CourseDto;
+import org.motechproject.whp.mtraining.service.CourseService;
+import org.motechproject.whp.mtraining.util.ISODateTimeUtil;
 import org.motechproject.whp.mtraining.CourseAdmin;
 import org.motechproject.whp.mtraining.domain.Course;
 import org.motechproject.whp.mtraining.domain.CoursePublicationAttempt;
@@ -53,7 +53,6 @@ public class CoursePublisher {
         LOGGER.info(String.format("Attempt %d [%s] - Starting course publish to IVR for courseId %s , version %s ", numberOfAttempts, currentDateTime(), courseId, version));
 
         Course course = new Course(courseDTO);
-        course.removeInactiveContent();
 
         LOGGER.info(String.format("Attempt %d [%s] - Retrieved course %s courseId %s , version %s ", numberOfAttempts, currentDateTime(), course.getName(), courseId, version));
 

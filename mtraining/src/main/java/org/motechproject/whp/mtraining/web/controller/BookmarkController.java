@@ -1,13 +1,13 @@
 package org.motechproject.whp.mtraining.web.controller;
 
-import org.motechproject.mtraining.constants.CourseStatus;
-import org.motechproject.mtraining.dto.BookmarkDto;
-import org.motechproject.mtraining.dto.ContentIdentifierDto;
-import org.motechproject.mtraining.dto.EnrolleeCourseProgressDto;
-import org.motechproject.mtraining.exception.CourseNotFoundException;
-import org.motechproject.mtraining.exception.InvalidBookmarkException;
-import org.motechproject.mtraining.service.CourseProgressService;
-import org.motechproject.mtraining.util.ISODateTimeUtil;
+import org.motechproject.whp.mtraining.constants.CourseStatus;
+import org.motechproject.whp.mtraining.dto.BookmarkDto;
+import org.motechproject.whp.mtraining.dto.ContentIdentifierDto;
+import org.motechproject.whp.mtraining.dto.EnrolleeCourseProgressDto;
+import org.motechproject.whp.mtraining.exception.CourseNotFoundException;
+import org.motechproject.whp.mtraining.exception.InvalidBookmarkException;
+import org.motechproject.whp.mtraining.service.CourseProgressService;
+import org.motechproject.whp.mtraining.util.ISODateTimeUtil;
 import org.motechproject.whp.mtraining.domain.CoursePublicationAttempt;
 import org.motechproject.whp.mtraining.domain.Provider;
 import org.motechproject.whp.mtraining.reports.domain.BookmarkReport;
