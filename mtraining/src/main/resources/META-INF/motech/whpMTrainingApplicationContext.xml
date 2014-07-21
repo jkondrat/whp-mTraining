@@ -28,26 +28,6 @@
                 <value>classpath:mtraining.properties</value>
             </list>
         </property>
-        <property name="configurationService" ref="configurationService"/>
-    </bean>
-
-
-    <bean id="header" class="org.motechproject.osgi.web.Header"/>
-
-    <bean id="moduleRegistrationData" class="org.motechproject.osgi.web.ModuleRegistrationData">
-        <constructor-arg name="url" value="../mtraining/index.html"/>
-        <constructor-arg name="moduleName" value="mtraining.module"/>
-        <constructor-arg name="angularModules">
-            <list>
-                <value>mtraining</value>
-            </list>
-        </constructor-arg>
-        <constructor-arg name="i18n">
-            <map>
-                <entry key="messages" value="../admin/messages/"/>
-            </map>
-        </constructor-arg>
-        <constructor-arg name="header" ref="header"/>
     </bean>
 
     <bean id="persistenceManagerFactoryBean" class="org.springframework.orm.jdo.LocalPersistenceManagerFactoryBean">
@@ -68,5 +48,8 @@
         <property name="maxUploadSize" value="15000000"/>
     </bean>
 
+    <bean id="mtrainingDbConnector" factory-bean="couchDbManager" factory-method="getConnector">
+        <constructor-arg value="motech-mtraining"/>
+    </bean>
 
 </beans>

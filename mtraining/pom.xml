@@ -313,6 +313,7 @@
                             org.motechproject.config.service;version=${motech.version},
                             org.motechproject.event.listener.annotations;version=${motech.version},
                             org.motechproject.osgi.web;version=${motech.version},
+                            org.motechproject.commons.couchdb.service,
                             org.datanucleus,
                             org.datanucleus.state,
                             org.datanucleus.api.jdo,

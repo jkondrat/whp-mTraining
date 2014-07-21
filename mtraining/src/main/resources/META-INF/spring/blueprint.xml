@@ -12,31 +12,49 @@
 
     <osgi:service interface="org.motechproject.whp.mtraining.service.ProviderService" ref="providerService"/>
 
-    <osgi:reference interface="org.motechproject.whp.mtraining.service.CourseService" id="courseService"/>
+    <osgi:service interface="org.motechproject.whp.mtraining.service.CourseService" ref="courseService"/>
 
-    <osgi:reference interface="org.motechproject.whp.mtraining.service.ModuleService" id="moduleService"/>
+    <osgi:service interface="org.motechproject.whp.mtraining.service.ModuleService" ref="moduleService"/>
 
-    <osgi:reference interface="org.motechproject.whp.mtraining.service.ChapterService" id="chapterService"/>
+    <osgi:service interface="org.motechproject.whp.mtraining.service.ChapterService" ref="chapterService"/>
 
-    <osgi:reference interface="org.motechproject.whp.mtraining.service.MessageService" id="messageService"/>
+    <osgi:service interface="org.motechproject.whp.mtraining.service.MessageService" ref="messageService"/>
 
-    <osgi:reference interface="org.motechproject.whp.mtraining.service.BookmarkService" id="bookmarkService"/>
+    <osgi:service interface="org.motechproject.whp.mtraining.service.BookmarkService" ref="bookmarkService"/>
 
-    <osgi:reference interface="org.motechproject.whp.mtraining.service.QuestionService" id="questionService"/>
+    <osgi:service interface="org.motechproject.whp.mtraining.service.QuestionService" ref="questionService"/>
 
-    <osgi:reference interface="org.motechproject.whp.mtraining.service.CourseConfigurationService" id="courseConfigService"/>
+    <osgi:service interface="org.motechproject.whp.mtraining.service.CourseConfigurationService" ref="courseConfigService"/>
 
-    <osgi:reference interface="org.motechproject.whp.mtraining.service.QuizService" id="quizService"/>
+    <osgi:service interface="org.motechproject.whp.mtraining.service.QuizService" ref="quizService"/>
 
-    <osgi:reference interface="org.motechproject.whp.mtraining.service.CourseProgressService" id="courseProgressService"/>
+    <osgi:service interface="org.motechproject.whp.mtraining.service.CourseProgressService" ref="courseProgressService"/>
 
     <osgi:reference interface="org.motechproject.security.service.MotechUserService" id="motechUserService"/>
 
     <osgi:reference interface="org.motechproject.config.service.ConfigurationService" id="configurationService"/>
 
+    <osgi:reference id="couchDbManager" interface="org.motechproject.commons.couchdb.service.CouchDbManager"/>
+
     <osgi:service ref="emailService"
                   interface="org.motechproject.whp.mtraining.service.EmailService"
                   auto-export="interfaces"/>
+
+    <bean id="moduleRegistrationData" class="org.motechproject.osgi.web.ModuleRegistrationData">
+        <constructor-arg name="url" value="../mtraining/index.html"/>
+        <constructor-arg name="moduleName" value="mtraining"/>
+        <constructor-arg name="angularModules">
+            <list>
+                <value>mtraining</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg name="i18n">
+            <map>
+                <entry key="messages" value="../mtraining/messages/"/>
+            </map>
+        </constructor-arg>
+        <property name="defaultURL" value="/mtraining"/>
+    </bean>
 
     <!--Mail Configuration-->
 

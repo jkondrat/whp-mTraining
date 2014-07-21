@@ -1,5 +1,6 @@
 package org.motechproject.whp.mtraining.domain;
 
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.joda.time.DateTime;
 import org.motechproject.whp.mtraining.dto.CourseDto;
 import org.motechproject.whp.mtraining.dto.ModuleDto;
@@ -24,6 +25,8 @@ public class Course extends CourseContent {
     private String description;
     @Persistent(column = "audio_file_name")
     private String externalId;
+    @JsonProperty
+    private boolean isPublished;
 
 
     public Course(String name, UUID courseId, Integer version, String description, String externalId, String createdBy, DateTime createdOn, List<Module> modules, boolean isActive) {
@@ -59,6 +62,10 @@ public class Course extends CourseContent {
 
     public String getExternalId() {
         return externalId;
+    }
+
+    public void publish() {
+        this.isPublished = true;
     }
 
 }
