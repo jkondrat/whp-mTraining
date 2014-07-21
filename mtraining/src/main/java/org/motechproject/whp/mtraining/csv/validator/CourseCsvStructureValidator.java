@@ -28,8 +28,8 @@ import static org.motechproject.whp.mtraining.csv.domain.CallLogRecordType.QUEST
 import static org.motechproject.whp.mtraining.csv.domain.CallLogRecordType.from;
 
 @Component
-public class CourseStructureValidator {
-    private Logger logger = LoggerFactory.getLogger(CourseStructureValidator.class);
+public class CourseCsvStructureValidator {
+    private Logger logger = LoggerFactory.getLogger(CourseCsvStructureValidator.class);
     private String ACTIVE_STATUS = "active";
     private String INACTIVE_STATUS = "inactive";
     private String BLANK_STATUS = "";
@@ -37,7 +37,7 @@ public class CourseStructureValidator {
     private CourseService courseService;
 
     @Autowired
-    public CourseStructureValidator(CourseService courseService) {
+    public CourseCsvStructureValidator(CourseService courseService) {
         this.courseService = courseService;
     }
 

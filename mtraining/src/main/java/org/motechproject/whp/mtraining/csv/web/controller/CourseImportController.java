@@ -8,7 +8,7 @@ import org.motechproject.whp.mtraining.csv.parser.CsvParser;
 import org.motechproject.whp.mtraining.csv.request.CourseConfigurationRequest;
 import org.motechproject.whp.mtraining.csv.request.CourseCsvRequest;
 import org.motechproject.whp.mtraining.csv.response.CsvImportResponse;
-import org.motechproject.whp.mtraining.csv.validator.CourseStructureValidator;
+import org.motechproject.whp.mtraining.csv.validator.CourseCsvStructureValidator;
 import org.motechproject.whp.mtraining.service.impl.CourseImportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,10 +33,10 @@ public class CourseImportController {
 
     private CsvParser csvParser;
     private CourseImportService courseImportService;
-    private CourseStructureValidator courseStructureValidator;
+    private CourseCsvStructureValidator courseStructureValidator;
 
     @Autowired
-    public CourseImportController(CsvParser csvParser, CourseStructureValidator courseStructureValidator, CourseImportService courseImportService) {
+    public CourseImportController(CsvParser csvParser, CourseCsvStructureValidator courseStructureValidator, CourseImportService courseImportService) {
         this.csvParser = csvParser;
         this.courseStructureValidator = courseStructureValidator;
         this.courseImportService = courseImportService;

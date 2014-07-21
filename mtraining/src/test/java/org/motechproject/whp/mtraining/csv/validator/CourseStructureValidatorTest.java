@@ -27,13 +27,13 @@ public class CourseStructureValidatorTest {
     @Mock
     private CourseService courseService;
 
-    private CourseStructureValidator courseStructureValidator;
+    private CourseCsvStructureValidator courseStructureValidator;
     private List<CourseCsvRequest> courseStructureCsvs;
     private List<CsvImportError> errors;
 
     @Before
     public void setUp() throws Exception {
-        courseStructureValidator = new CourseStructureValidator(courseService);
+        courseStructureValidator = new CourseCsvStructureValidator(courseService);
         courseStructureCsvs = new ArrayList<>();
         courseStructureCsvs.add(new CourseCsvRequest("Basic TB Symptoms", "Course", "Active", null, "Message Description", "filename"));
         courseStructureCsvs.add(new CourseCsvRequest("Module TB Symptoms", "Module", "Active", "Basic TB Symptoms", "Message Description", "filename"));
