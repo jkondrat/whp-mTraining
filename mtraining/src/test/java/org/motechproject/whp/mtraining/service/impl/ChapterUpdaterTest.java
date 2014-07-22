@@ -7,7 +7,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.motechproject.whp.mtraining.dto.ChapterDto;
 import org.motechproject.whp.mtraining.dto.MessageDto;
-import org.motechproject.whp.mtraining.service.ChapterService;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -4,7 +4,6 @@ import org.motechproject.whp.mtraining.dto.ContentIdentifierDto;
 import org.motechproject.whp.mtraining.dto.CourseConfigurationDto;
 import org.motechproject.mtraining.domain.Course;
 import org.motechproject.whp.mtraining.dto.LocationDto;
-import org.motechproject.whp.mtraining.service.CourseConfigurationService;
 import org.motechproject.mtraining.service.MTrainingService;
 import org.motechproject.security.model.UserDto;
 import org.motechproject.security.service.MotechUserService;
@@ -31,13 +30,11 @@ public class CourseImportService {
 
     private MTrainingService courseService;
     private MotechUserService motechUserService;
-    private CourseConfigurationService courseConfigService;
 
     @Autowired
-    public CourseImportService(MTrainingService courseService, MotechUserService motechUserService, CourseConfigurationService courseConfigService) {
+    public CourseImportService(MTrainingService courseService, MotechUserService motechUserService) {
         this.courseService = courseService;
         this.motechUserService = motechUserService;
-        this.courseConfigService = courseConfigService;
     }
 
 
@@ -52,8 +49,8 @@ public class CourseImportService {
 
     public void importCourseConfig(List<CourseConfigurationRequest> requests) {
         for (CourseConfigurationRequest request : requests) {
-            courseConfigService.addOrUpdateCourseConfiguration(new CourseConfigurationDto(request.getCourseName(),
-                    valueOf(request.getCourseDurationInDays()), new LocationDto(request.getBlock(), request.getDistrict(), request.getState())));
+            //courseConfigService.addOrUpdateCourseConfiguration(new CourseConfigurationDto(request.getCourseName(),
+            //        valueOf(request.getCourseDurationInDays()), new LocationDto(request.getBlock(), request.getDistrict(), request.getState())));
         }
     }
 

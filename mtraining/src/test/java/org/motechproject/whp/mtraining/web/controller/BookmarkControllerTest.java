@@ -19,7 +19,6 @@ import org.motechproject.whp.mtraining.dto.EnrolleeCourseProgressDto;
 import org.motechproject.whp.mtraining.exception.CourseNotFoundException;
 import org.motechproject.whp.mtraining.exception.InvalidBookmarkException;
 import org.motechproject.whp.mtraining.service.BookmarkService;
-import org.motechproject.whp.mtraining.service.CourseProgressService;
 import org.motechproject.whp.mtraining.util.ISODateTimeUtil;
 import org.motechproject.whp.mtraining.BookmarkBuilder;
 import org.motechproject.whp.mtraining.domain.CoursePublicationAttempt;

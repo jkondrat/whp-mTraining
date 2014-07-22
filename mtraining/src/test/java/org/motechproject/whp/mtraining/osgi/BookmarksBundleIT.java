@@ -21,7 +21,6 @@ import org.motechproject.whp.mtraining.dto.LocationDto;
 import org.motechproject.whp.mtraining.dto.MessageDto;
 import org.motechproject.whp.mtraining.dto.ModuleDto;
 import org.motechproject.whp.mtraining.service.CourseConfigurationService;
-import org.motechproject.whp.mtraining.service.CourseProgressService;
 import org.motechproject.whp.mtraining.service.CourseService;
 import org.motechproject.testing.utils.PollingHttpClient;
 import org.motechproject.testing.utils.TestContext;

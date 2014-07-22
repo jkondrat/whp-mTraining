@@ -24,7 +24,6 @@ import org.motechproject.whp.mtraining.dto.QuizResultSheetDto;
 import org.motechproject.whp.mtraining.exception.InvalidQuestionException;
 import org.motechproject.whp.mtraining.exception.InvalidQuizException;
 import org.motechproject.whp.mtraining.service.BookmarkService;
-import org.motechproject.whp.mtraining.service.CourseProgressService;
 import org.motechproject.whp.mtraining.service.CourseService;
 import org.motechproject.whp.mtraining.service.QuizService;
 import org.motechproject.whp.mtraining.reports.QuizReporter;
