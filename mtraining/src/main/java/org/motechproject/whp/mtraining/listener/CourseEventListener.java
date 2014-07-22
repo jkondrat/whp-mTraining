@@ -27,10 +27,10 @@ public class CourseEventListener {
     @MotechListener(subjects = MTrainingEventConstants.COURSE_CREATION_EVENT)
     public void courseAdded(MotechEvent event) {
         Map<String, Object> eventData = event.getParameters();
-        UUID courseId = (UUID) eventData.get(MTrainingEventConstants.CONTENT_ID);
+        Long courseId = (Long) eventData.get(MTrainingEventConstants.CONTENT_ID);
         Integer version = (Integer) eventData.get(MTrainingEventConstants.VERSION);
         courseReporter.reportCourseAdded(courseId, version);
-        coursePublisher.publish(courseId, version);
+        coursePublisher.publish(courseId);
     }
 
 }

@@ -152,8 +152,8 @@ public class BookmarkController {
         CoursePublicationAttempt latestCoursePublicationAttempt = allCoursePublicationAttempts.getLastSuccessfulCoursePublicationAttempt();
         if(latestCoursePublicationAttempt == null)
             return null;
-        ContentIdentifierDto contentIdentifierDto = new ContentIdentifierDto(latestCoursePublicationAttempt.getCourseId(), latestCoursePublicationAttempt.getVersion());
-        EnrolleeCourseProgressDto enrolleeCourseProgressDto = courseProgressService.getCourseProgressForEnrollee(externalId, contentIdentifierDto.getContentId());
+        ContentIdentifierDto contentIdentifierDto = new ContentIdentifierDto(latestCoursePublicationAttempt.getCourseId(), 1);
+        EnrolleeCourseProgressDto enrolleeCourseProgressDto = courseProgressService.getCourseProgressForEnrollee(externalId, contentIdentifierDto.getContentId().node());
         if (enrolleeCourseProgressDto == null) {
             try{
             enrolleeCourseProgressDto = courseProgressService.getInitialCourseProgressForEnrollee(externalId, contentIdentifierDto);

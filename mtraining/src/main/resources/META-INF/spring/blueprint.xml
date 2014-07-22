@@ -12,8 +12,6 @@
 
     <osgi:service interface="org.motechproject.whp.mtraining.service.ProviderService" ref="providerService"/>
 
-    <osgi:reference interface="org.motechproject.whp.mtraining.service.CourseService" id="courseService"/>
-
     <osgi:reference interface="org.motechproject.whp.mtraining.service.ModuleService" id="moduleService"/>
 
     <osgi:reference interface="org.motechproject.whp.mtraining.service.ChapterService" id="chapterService"/>

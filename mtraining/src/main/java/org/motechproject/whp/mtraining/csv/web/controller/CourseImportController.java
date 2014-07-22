@@ -10,6 +10,7 @@ import org.motechproject.whp.mtraining.csv.request.CourseCsvRequest;
 import org.motechproject.whp.mtraining.csv.response.CsvImportResponse;
 import org.motechproject.whp.mtraining.csv.validator.CourseCsvStructureValidator;
 import org.motechproject.whp.mtraining.service.impl.CourseImportService;
+import org.motechproject.mtraining.domain.Course;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,10 +52,9 @@ public class CourseImportController {
             if (!errors.isEmpty()) {
                 return failure(errors);
             }
-            ContentIdentifierDto importedCourseIdentifier = courseImportService.importCourse(courseCsvRequests);
+            Course importedCourseIdentifier = courseImportService.importCourse(courseCsvRequests);
             return CsvImportResponse.success(format("Course: %s with version %s has been imported successfully",
-                    importedCourseIdentifier.getContentId(),
-                    importedCourseIdentifier.getVersion()));
+                    importedCourseIdentifier.getId()));
         } catch (Exception ex) {
             LOG.error(ex.getMessage());
             return failure(asList(new CsvImportError(ex.getMessage())));

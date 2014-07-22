@@ -22,7 +22,7 @@ public interface CourseProgressService {
      * @param courseContentId
      * @return
      */
-    EnrolleeCourseProgressDto getCourseProgressForEnrollee(String externalId, UUID courseContentId);
+    EnrolleeCourseProgressDto getCourseProgressForEnrollee(String externalId, Long courseContentId);
 
     /**
      * Given a externalId (i.e the enrollee id) and courseId return a course progress dto with the first bookmark from the given course.

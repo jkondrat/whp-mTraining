@@ -7,7 +7,7 @@ import org.motechproject.whp.mtraining.dto.AnswerSheetDto;
 import org.motechproject.whp.mtraining.dto.BookmarkDto;
 import org.motechproject.whp.mtraining.dto.ChapterDto;
 import org.motechproject.whp.mtraining.dto.ContentIdentifierDto;
-import org.motechproject.whp.mtraining.dto.CourseDto;
+import org.motechproject.mtraining.domain.Course;
 import org.motechproject.whp.mtraining.dto.EnrolleeCourseProgressDto;
 import org.motechproject.whp.mtraining.dto.ModuleDto;
 import org.motechproject.whp.mtraining.dto.QuestionResultDto;
@@ -17,7 +17,7 @@ import org.motechproject.whp.mtraining.exception.InvalidQuestionException;
 import org.motechproject.whp.mtraining.exception.InvalidQuizException;
 import org.motechproject.whp.mtraining.service.BookmarkService;
 import org.motechproject.whp.mtraining.service.CourseProgressService;
-import org.motechproject.whp.mtraining.service.CourseService;
+import org.motechproject.mtraining.service.MTrainingService;
 import org.motechproject.whp.mtraining.service.QuizService;
 import org.motechproject.whp.mtraining.util.ISODateTimeUtil;
 import org.motechproject.whp.mtraining.reports.domain.QuestionAttempt;
@@ -49,11 +49,11 @@ public class QuizReporter {
     private CourseProgressService courseProgressService;
     private QuizService quizService;
     private AllQuestionAttempts allQuestionAttempts;
-    private CourseService courseService;
+    private MTrainingService courseService;
     private Logger LOGGER = LoggerFactory.getLogger(QuizReporter.class);
 
     @Autowired
-    public QuizReporter(BookmarkService bookmarkService, CourseProgressService courseProgressService, QuizService quizService, AllQuestionAttempts allQuestionAttempts, CourseService courseService) {
+    public QuizReporter(BookmarkService bookmarkService, CourseProgressService courseProgressService, QuizService quizService, AllQuestionAttempts allQuestionAttempts, MTrainingService courseService) {
         this.bookmarkService = bookmarkService;
         this.courseProgressService = courseProgressService;
         this.quizService = quizService;
@@ -81,25 +81,25 @@ public class QuizReporter {
     }
 
     private ValidationError validateQuizReportRequest(QuizReportRequest quizReportRequest) {
-        CourseDto course = courseService.getCourse(quizReportRequest.getCourseDto());
-        if (course == null) {
-            LOGGER.error(String.format("No course found for courseId %s and version %s", quizReportRequest.getModuleDto().getContentId(), quizReportRequest.getModuleDto().getVersion()));
-            return new ValidationError(ResponseStatus.INVALID_COURSE);
-        }
-        ModuleDto module = course.getModule(quizReportRequest.getModuleDto().getContentId());
-        if (module == null) {
-            LOGGER.error(String.format("No module found for moduleId %s and version %s", quizReportRequest.getModuleDto().getContentId(), quizReportRequest.getModuleDto().getVersion()));
-            return new ValidationError(ResponseStatus.INVALID_MODULE);
-        }
-        ChapterDto chapter = module.getChapter(quizReportRequest.getChapterDto().getContentId());
-        if (chapter == null) {
-            LOGGER.error(String.format("No chapter found for chapterId %s and version %s", quizReportRequest.getChapterDto().getContentId(), quizReportRequest.getChapterDto().getVersion()));
-            return new ValidationError(ResponseStatus.INVALID_CHAPTER);
-        }
-        if (!chapter.getQuiz().getContentId().equals(quizReportRequest.getQuizDto().getContentId())) {
-            LOGGER.error(String.format("No quiz found for quizId %s and version %s", quizReportRequest.getQuizDto().getContentId(), quizReportRequest.getQuizDto().getVersion()));
-            return new ValidationError(ResponseStatus.QUIZ_NOT_FOUND);
-        }
+//        Course course = courseService.getCourse(quizReportRequest.getCourseDto());
+//        if (course == null) {
+//            LOGGER.error(String.format("No course found for courseId %s and version %s", quizReportRequest.getModuleDto().getContentId(), quizReportRequest.getModuleDto().getVersion()));
+//            return new ValidationError(ResponseStatus.INVALID_COURSE);
+//        }
+//        ModuleDto module = course.getModule(quizReportRequest.getModuleDto().getContentId());
+//        if (module == null) {
+//            LOGGER.error(String.format("No module found for moduleId %s and version %s", quizReportRequest.getModuleDto().getContentId(), quizReportRequest.getModuleDto().getVersion()));
+//            return new ValidationError(ResponseStatus.INVALID_MODULE);
+//        }
+//        ChapterDto chapter = module.getChapter(quizReportRequest.getChapterDto().getContentId());
+//        if (chapter == null) {
+//            LOGGER.error(String.format("No chapter found for chapterId %s and version %s", quizReportRequest.getChapterDto().getContentId(), quizReportRequest.getChapterDto().getVersion()));
+//            return new ValidationError(ResponseStatus.INVALID_CHAPTER);
+//        }
+//        if (!chapter.getQuiz().getContentId().equals(quizReportRequest.getQuizDto().getContentId())) {
+//            LOGGER.error(String.format("No quiz found for quizId %s and version %s", quizReportRequest.getQuizDto().getContentId(), quizReportRequest.getQuizDto().getVersion()));
+//            return new ValidationError(ResponseStatus.QUIZ_NOT_FOUND);
+//        }
         return null;
 
     }
@@ -150,7 +150,7 @@ public class QuizReporter {
     }
 
     private EnrolleeCourseProgressDto getEnrolleeCourseProgress(String externalId, UUID courseContentId) {
-        EnrolleeCourseProgressDto enrolleeCourseProgressDto = courseProgressService.getCourseProgressForEnrollee(externalId, courseContentId);
+        EnrolleeCourseProgressDto enrolleeCourseProgressDto = courseProgressService.getCourseProgressForEnrollee(externalId, courseContentId.node());
         if (enrolleeCourseProgressDto == null) {
             // In Scenarios where A Quiz Report is posted before any bookmark post. We need to create a new Course Progress for the Enrollee.
             // Also a situation may arise where a Quiz Report may be posted by the IVR but the post may not be followed by the corresponding Bookmark post.

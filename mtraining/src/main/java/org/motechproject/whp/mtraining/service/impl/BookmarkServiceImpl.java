@@ -9,8 +9,9 @@ import org.motechproject.whp.mtraining.exception.CourseNotFoundException;
 import org.motechproject.whp.mtraining.exception.InvalidBookmarkException;
 import org.motechproject.whp.mtraining.repository.AllBookmarks;
 import org.motechproject.whp.mtraining.service.BookmarkService;
-import org.motechproject.whp.mtraining.service.CourseService;
+import org.motechproject.mtraining.service.MTrainingService;
 import org.motechproject.whp.mtraining.util.ISODateTimeUtil;
+import org.motechproject.mtraining.domain.Course;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +29,11 @@ public class BookmarkServiceImpl implements BookmarkService {
     private static final Logger LOGGER = LoggerFactory.getLogger(org.motechproject.mtraining.service.impl.BookmarkServiceImpl.class);
 
     private AllBookmarks allBookmarks;
-    private CourseService courseService;
+    private MTrainingService courseService;
     private BookmarkBuilder bookmarkBuilder;
 
     @Autowired
-    public BookmarkServiceImpl(AllBookmarks allBookmarks, CourseService courseService, BookmarkBuilder bookmarkBuilder) {
+    public BookmarkServiceImpl(AllBookmarks allBookmarks, MTrainingService courseService, BookmarkBuilder bookmarkBuilder) {
         this.allBookmarks = allBookmarks;
         this.courseService = courseService;
         this.bookmarkBuilder = bookmarkBuilder;
@@ -47,17 +48,18 @@ public class BookmarkServiceImpl implements BookmarkService {
      */
     @Override
     public BookmarkDto getBookmark(String externalId) {
-        Bookmark bookmark = allBookmarks.findBy(externalId);
-        if (bookmark == null) {
-            return null;
-        }
-        CourseDto latestPublishedCourse = courseService.getLatestPublishedCourse(bookmark.getCourse().getContentId());
-        if (latestPublishedCourse == null) {
-            return null;
-        }
-        return new BookmarkDto(bookmark.getExternalId(), createContentIdentifierDto(bookmark.getCourse()),
-                createContentIdentifierDto(bookmark.getModule()), createContentIdentifierDto(bookmark.getChapter()),
-                createContentIdentifierDto(bookmark.getMessage()), createContentIdentifierDto(bookmark.getQuiz()), bookmark.getDateModified());
+//        Bookmark bookmark = allBookmarks.findBy(externalId);
+//        if (bookmark == null) {
+//            return null;
+//        }courseService.
+//        Course latestPublishedCourse = courseService.getCourseById(Integer.parseInt(externalId));
+//        if (latestPublishedCourse == null) {
+//            return null;
+//        }
+//        return new BookmarkDto(bookmark.getExternalId(), createContentIdentifierDto(bookmark.getCourse()),
+//                createContentIdentifierDto(bookmark.getModule()), createContentIdentifierDto(bookmark.getChapter()),
+//                createContentIdentifierDto(bookmark.getMessage()), createContentIdentifierDto(bookmark.getQuiz()), bookmark.getDateModified());
+        return null;
     }
 
     /**
@@ -70,14 +72,15 @@ public class BookmarkServiceImpl implements BookmarkService {
      */
     @Override
     public BookmarkDto getInitialBookmark(String externalId, ContentIdentifierDto courseIdentifier) {
-        LOGGER.info(String.format("Request for adding bookmark for externalId %s and courseId %s ", externalId, courseIdentifier.getContentId()));
-        CourseDto course = courseService.getLatestPublishedCourse(courseIdentifier.getContentId());
-        if (course == null) {
-            throw new CourseNotFoundException();
-        }
-        BookmarkDto bookmarkDto = bookmarkBuilder.buildBookmarkFromFirstActiveContent(externalId, course);
-        LOGGER.debug(String.format("created initial bookmark for externalId %s %s ", externalId, bookmarkDto));
-        return bookmarkDto;
+//        LOGGER.info(String.format("Request for adding bookmark for externalId %s and courseId %s ", externalId, courseIdentifier.getContentId()));
+//        CourseDto course = courseService.getLatestPublishedCourse(courseIdentifier.getContentId());
+//        if (course == null) {
+//            throw new CourseNotFoundException();
+//        }
+//        BookmarkDto bookmarkDto = bookmarkBuilder.buildBookmarkFromFirstActiveContent(externalId, course);
+//        LOGGER.debug(String.format("created initial bookmark for externalId %s %s ", externalId, bookmarkDto));
+//        return bookmarkDto;
+        return null;
     }
 
     /**
@@ -126,13 +129,14 @@ public class BookmarkServiceImpl implements BookmarkService {
      */
     @Override
     public BookmarkDto getBookmarkForQuizOfAChapter(String externalId, ContentIdentifierDto courseIdentifierDto, ContentIdentifierDto moduleIdentifierDto, ContentIdentifierDto chapterIdentifierDto) {
-        CourseDto courseDto = courseService.getCourse(courseIdentifierDto);
-        ModuleDto moduleDto = courseDto.getModule(moduleIdentifierDto.getContentId());
-        ChapterDto chapterDto = moduleDto.getChapter(chapterIdentifierDto.getContentId());
-        QuizDto quizDto = chapterDto.getQuiz();
-        BookmarkDto bookmarkDto = bookmarkBuilder.buildBookmarkFrom(externalId, courseDto, moduleDto,
-                chapterDto, quizDto);
-        return bookmarkDto;
+//        CourseDto courseDto = courseService.getCourse(courseIdentifierDto);
+//        ModuleDto moduleDto = courseDto.getModule(moduleIdentifierDto.getContentId());
+//        ChapterDto chapterDto = moduleDto.getChapter(chapterIdentifierDto.getContentId());
+//        QuizDto quizDto = chapterDto.getQuiz();
+//        BookmarkDto bookmarkDto = bookmarkBuilder.buildBookmarkFrom(externalId, courseDto, moduleDto,
+//                chapterDto, quizDto);
+
+return null;//        return bookmarkDto;
     }
 
     /**
@@ -146,13 +150,13 @@ public class BookmarkServiceImpl implements BookmarkService {
      */
     @Override
     public void setBookmarkToFirstActiveContentOfAChapter(String externalId, ContentIdentifierDto courseIdentifierDto, ContentIdentifierDto moduleIdentifierDto, ContentIdentifierDto chapterIdentifierDto) {
-        CourseDto courseDto = courseService.getCourse(courseIdentifierDto);
-        ModuleDto moduleDto = courseDto.getModule(moduleIdentifierDto.getContentId());
-        ChapterDto chapterDto = moduleDto.getChapter(chapterIdentifierDto.getContentId());
-
-        BookmarkDto bookmarkDto = bookmarkBuilder.buildBookmarkFromFirstActiveContent(externalId, courseDto, moduleDto,
-                chapterDto);
-        addOrUpdate(bookmarkDto);
+//        CourseDto courseDto = courseService.getCourse(courseIdentifierDto);
+//        ModuleDto moduleDto = courseDto.getModule(moduleIdentifierDto.getContentId());
+//        ChapterDto chapterDto = moduleDto.getChapter(chapterIdentifierDto.getContentId());
+//
+//        BookmarkDto bookmarkDto = bookmarkBuilder.buildBookmarkFromFirstActiveContent(externalId, courseDto, moduleDto,
+//                chapterDto);
+//        addOrUpdate(bookmarkDto);
     }
 
     /**
@@ -169,27 +173,28 @@ public class BookmarkServiceImpl implements BookmarkService {
      */
     @Override
     public BookmarkDto getNextBookmark(String externalId, ContentIdentifierDto courseIdentifierDto, ContentIdentifierDto moduleIdentifierDto, ContentIdentifierDto chapterIdentifierDto) {
-        CourseDto courseDto = courseService.getCourse(courseIdentifierDto);
-        ModuleDto moduleDto = courseDto.getModule(moduleIdentifierDto.getContentId());
-        ChapterDto chapterDto = moduleDto.getChapter(chapterIdentifierDto.getContentId());
-
-        BookmarkDto bookmarkDto = null;
-
-        ChapterDto nextActiveChapterAfterGivenChapter = moduleDto.getNextActiveChapterAfter(chapterDto.getContentId());
-
-        if (nextActiveChapterAfterGivenChapter != null) {
-            bookmarkDto = bookmarkBuilder.buildBookmarkFromFirstActiveContent(externalId, courseDto, moduleDto, nextActiveChapterAfterGivenChapter);
-        }
-
-        if (bookmarkDto == null) {
-            ModuleDto nextActiveModuleAfterGivenModule = courseDto.getNextActiveModuleAfter(moduleDto.getContentId());
-            bookmarkDto = bookmarkBuilder.buildBookmarkFromFirstActiveContent(externalId, courseDto, nextActiveModuleAfterGivenModule);
-        }
-
-        if (bookmarkDto == null) {
-            return bookmarkBuilder.buildCourseCompletionBookmark(externalId, courseDto);
-        }
-        return bookmarkDto;
+//        CourseDto courseDto = courseService.getCourse(courseIdentifierDto);
+//        ModuleDto moduleDto = courseDto.getModule(moduleIdentifierDto.getContentId());
+//        ChapterDto chapterDto = moduleDto.getChapter(chapterIdentifierDto.getContentId());
+//
+//        BookmarkDto bookmarkDto = null;
+//
+//        ChapterDto nextActiveChapterAfterGivenChapter = moduleDto.getNextActiveChapterAfter(chapterDto.getContentId());
+//
+//        if (nextActiveChapterAfterGivenChapter != null) {
+//            bookmarkDto = bookmarkBuilder.buildBookmarkFromFirstActiveContent(externalId, courseDto, moduleDto, nextActiveChapterAfterGivenChapter);
+//        }
+//
+//        if (bookmarkDto == null) {
+//            ModuleDto nextActiveModuleAfterGivenModule = courseDto.getNextActiveModuleAfter(moduleDto.getContentId());
+//            bookmarkDto = bookmarkBuilder.buildBookmarkFromFirstActiveContent(externalId, courseDto, nextActiveModuleAfterGivenModule);
+//        }
+//
+//        if (bookmarkDto == null) {
+//            return bookmarkBuilder.buildCourseCompletionBookmark(externalId, courseDto);
+//        }
+//        return bookmarkDto;
+        return null;
     }
 
     /**
@@ -199,9 +204,9 @@ public class BookmarkServiceImpl implements BookmarkService {
      */
     @Override
     public void setBookmarkToLastActiveContentOfACourse(String externalId, ContentIdentifierDto courseIdentifier) {
-        CourseDto courseDto = courseService.getCourse(courseIdentifier);
-        BookmarkDto bookmarkDto = bookmarkBuilder.buildBookmarkFromLastActiveContent(externalId, courseDto);
-        addOrUpdate(bookmarkDto);
+//        CourseDto courseDto = courseService.getCourse(courseIdentifier);
+//        BookmarkDto bookmarkDto = bookmarkBuilder.buildBookmarkFromLastActiveContent(externalId, courseDto);
+//        addOrUpdate(bookmarkDto);
     }
 
     private Bookmark toBookmark(BookmarkDto bookmarkDto) {

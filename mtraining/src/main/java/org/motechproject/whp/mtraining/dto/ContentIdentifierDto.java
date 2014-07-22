@@ -10,19 +10,24 @@ import java.util.UUID;
  * by fields having values as contentId and version of the module.
  */
 public class ContentIdentifierDto {
-    private UUID contentId;
+    private Long contentId;
+    private UUID contentId2;
     private Integer version;
 
     public ContentIdentifierDto() {
     }
 
-    public ContentIdentifierDto(UUID contentId, Integer version) {
+    public ContentIdentifierDto(Long contentId, Integer version) {
         this.contentId = contentId;
+        this.version = version;
+    }
+    public ContentIdentifierDto(UUID contentId, Integer version) {
+        this.contentId2 = contentId;
         this.version = version;
     }
 
     public UUID getContentId() {
-        return contentId;
+        return contentId2;
     }
 
     public Integer getVersion() {
