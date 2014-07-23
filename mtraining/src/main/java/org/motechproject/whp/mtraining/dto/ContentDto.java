@@ -58,10 +58,6 @@ public abstract class ContentDto {
         this.contentId = contentId;
     }
 
-    public ContentIdentifierDto toContentIdentifierDto() {
-        return new ContentIdentifierDto(contentId, version);
-    }
-
     public boolean isActive() {
         return isActive;
     }

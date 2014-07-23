@@ -12,21 +12,15 @@ import java.util.List;
 
 public class QuizResultSheetDto {
     private String externalId;
-    private ContentIdentifierDto quizDto;
     private List<QuestionResultDto> questionResultDtos;
     private Double score;
     private Boolean passed;
 
-    public QuizResultSheetDto(String externalId, ContentIdentifierDto quizDto, List<QuestionResultDto> questionResultDtos, Double score, Boolean passed) {
+    public QuizResultSheetDto(String externalId, List<QuestionResultDto> questionResultDtos, Double score, Boolean passed) {
         this.externalId = externalId;
-        this.quizDto = quizDto;
         this.questionResultDtos = questionResultDtos;
         this.score = score;
         this.passed = passed;
-    }
-
-    public ContentIdentifierDto getQuizDto() {
-        return quizDto;
     }
 
     public List<QuestionResultDto> getQuestionResultDtos() {

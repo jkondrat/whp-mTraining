@@ -14,8 +14,6 @@ import static org.motechproject.whp.mtraining.web.domain.ResponseStatus.*;
 
 public class CourseProgress {
     @JsonProperty
-    Bookmark bookmark;
-    @JsonProperty
     private String courseStartTime;
     @JsonProperty
     private int timeLeftToCompleteCourse;
@@ -25,9 +23,8 @@ public class CourseProgress {
     public CourseProgress() {
     }
 
-    public CourseProgress(String courseStartTime, Bookmark bookmark, int timeLeftToCompleteCourse, String courseStatus) {
+    public CourseProgress(String courseStartTime, int timeLeftToCompleteCourse, String courseStatus) {
         this.courseStartTime = courseStartTime;
-        this.bookmark = bookmark;
         this.timeLeftToCompleteCourse = timeLeftToCompleteCourse;
         this.courseStatus = courseStatus;
     }
@@ -35,10 +32,6 @@ public class CourseProgress {
 
     public String getCourseStartTime() {
         return courseStartTime;
-    }
-
-    public Bookmark getBookmark() {
-        return bookmark;
     }
 
     public int getTimeLeftToCompleteCourse() {
@@ -60,11 +53,6 @@ public class CourseProgress {
         if (!ISODateTimeUtil.validate(courseStartTime)) {
             validationErrors.add(new ValidationError(INVALID_DATE_TIME.getCode(), INVALID_DATE_TIME.getMessage().concat(" for: Course Start Time")));
         }
-        if (bookmark == null) {
-            validationErrors.add(new ValidationError(INVALID_BOOKMARK));
-            return validationErrors;
-        }
-        validationErrors.addAll(bookmark.validate());
         return validationErrors;
 
     }
