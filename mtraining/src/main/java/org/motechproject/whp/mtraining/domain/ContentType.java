@@ -1,7 +1,6 @@
 package org.motechproject.whp.mtraining.domain;
 
 import org.apache.commons.lang.StringUtils;
-import org.motechproject.whp.mtraining.dto.AnswerDto;
 import org.motechproject.whp.mtraining.dto.ChapterDto;
 import org.motechproject.whp.mtraining.dto.CourseDto;
 import org.motechproject.whp.mtraining.dto.MessageDto;
@@ -59,7 +58,7 @@ public enum ContentType {
         @Override
         public QuestionDto toDto(String nodeName, String description, String fileName, boolean isActive, Integer numberOfQuizQuestions,
                                  List<String> options, String correctAnswer, String correctAnswerFileName, Double passPercentage, List<Object> childDtos, String contentAuthor) {
-            return new QuestionDto(isActive, nodeName, description, fileName, new AnswerDto(correctAnswer, correctAnswerFileName), options, contentAuthor);
+            return new QuestionDto(isActive, nodeName, description, fileName, options, contentAuthor);
         }
     };
 

@@ -1,13 +1,11 @@
 package org.motechproject.whp.mtraining.osgi;
 
-import org.motechproject.whp.mtraining.dto.AnswerDto;
 import org.motechproject.whp.mtraining.dto.ChapterDto;
 import org.motechproject.whp.mtraining.dto.CourseDto;
 import org.motechproject.whp.mtraining.dto.MessageDto;
 import org.motechproject.whp.mtraining.dto.ModuleDto;
 import org.motechproject.whp.mtraining.dto.QuestionDto;
 import org.motechproject.whp.mtraining.dto.QuizDto;
-import org.motechproject.whp.mtraining.service.CourseService;
 import org.motechproject.testing.utils.Wait;
 import org.motechproject.testing.utils.WaitCondition;
 import org.motechproject.whp.mtraining.IVRServer;

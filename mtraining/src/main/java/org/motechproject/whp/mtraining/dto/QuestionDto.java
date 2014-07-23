@@ -19,25 +19,22 @@ import java.util.UUID;
 public class QuestionDto extends ContentDto {
     private String name;
     private String description;
-    private AnswerDto answer;
     private List<String> options;
 
     public QuestionDto() {
     }
 
-    public QuestionDto(boolean isActive, String name, String description, String externalId, AnswerDto answer, List<String> options, String createdBy) {
+    public QuestionDto(boolean isActive, String name, String description, String externalId, List<String> options, String createdBy) {
         super(isActive, externalId, createdBy);
         this.name = name;
         this.description = description;
-        this.answer = answer;
         this.options = options;
     }
 
-    public QuestionDto(UUID contentId, Integer version, boolean isActive, String name, String description, String externalId, AnswerDto answer, List<String> options, String createdBy) {
+    public QuestionDto(UUID contentId, Integer version, boolean isActive, String name, String description, String externalId, List<String> options, String createdBy) {
         super(contentId, version, isActive, externalId, createdBy);
         this.name = name;
         this.description = description;
-        this.answer = answer;
         this.options = options;
     }
 
@@ -47,10 +44,6 @@ public class QuestionDto extends ContentDto {
 
     public String getDescription() {
         return description;
-    }
-
-    public AnswerDto getAnswer() {
-        return answer;
     }
 
     public List<String> getOptions() {

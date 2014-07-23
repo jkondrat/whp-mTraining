@@ -2,7 +2,6 @@ package org.motechproject.whp.mtraining;
 
 import org.joda.time.DateTime;
 import org.motechproject.whp.mtraining.util.ISODateTimeUtil;
-import org.motechproject.whp.mtraining.domain.Answer;
 import org.motechproject.whp.mtraining.domain.Chapter;
 import org.motechproject.whp.mtraining.domain.Course;
 import org.motechproject.whp.mtraining.domain.Message;
@@ -61,13 +60,12 @@ public class CourseBuilder {
     private Quiz buildQuiz(String quizName) {
         List<Question> questions = new ArrayList<>();
         questions.add(buildQuestion("Test Question 1"));
-        Quiz quiz = new Quiz(quizName, contentId, version, createdBy, createdOn, passPercentage, isActive, questions, questions.size());
-        quiz.addQuestion(buildQuestion("Test Question 2"));
+        Quiz quiz = new Quiz(contentId, version, isActive, quizName, createdBy, questions,questions.size(),passPercentage, createdBy);
         return quiz;
     }
 
     private Question buildQuestion(String questionName) {
-        return new Question(questionName, contentId, version, description, questionAudioFileName, createdBy, createdOn, Arrays.asList("A", "B"), new Answer(answerAudioFileName, "A"), isActive);
+        return new Question(contentId, version, isActive, questionName, description, createdBy, Arrays.asList("A", "B"), createdBy);
     }
 
     public CourseBuilder withMessageAudioFile(String audioFileName) {

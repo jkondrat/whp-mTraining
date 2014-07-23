@@ -2,8 +2,6 @@ package org.motechproject.whp.mtraining.domain;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.ektorp.support.TypeDiscriminator;
-import org.motechproject.whp.mtraining.domain.Answer;
-import org.motechproject.whp.mtraining.domain.CourseContent;
 
 import java.util.List;
 import java.util.UUID;
@@ -30,24 +28,19 @@ public class Question extends CourseContent {
     private String description;
 
     @JsonProperty
-    private Answer answer;
-
-    @JsonProperty
     private List<String> options;
 
-    public Question(boolean isActive, String name, String description, String externalId, Answer answer, List<String> options, String createdBy) {
+    public Question(boolean isActive, String name, String description, String externalId,List<String> options, String createdBy) {
         super(name, UUID.fromString(externalId), null, createdBy, null, isActive);
         this.name = name;
         this.description = description;
-        this.answer = answer;
         this.options = options;
     }
 
-    public Question(UUID contentId, Integer version, boolean isActive, String name, String description, String externalId, Answer answer, List<String> options, String createdBy) {
+    public Question(UUID contentId, Integer version, boolean isActive, String name, String description, String externalId, List<String> options, String createdBy) {
         super(name, UUID.fromString(externalId), version, createdBy, null, isActive);
         this.name = name;
         this.description = description;
-        this.answer = answer;
         this.options = options;
     }
 
@@ -59,15 +52,11 @@ public class Question extends CourseContent {
         return description;
     }
 
-    public Answer getAnswer() {
-        return answer;
-    }
-
     public List<String> getOptions() {
         return options;
     }
 
     public Boolean isCorrectAnswer(String selectedOption) {
-        return answer.getCorrectOption().equalsIgnoreCase(selectedOption);
+        return true;
     }
 }
