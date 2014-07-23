@@ -4,7 +4,6 @@ import org.apache.commons.lang.StringUtils;
 import org.motechproject.whp.mtraining.dto.ChapterDto;
 import org.motechproject.whp.mtraining.dto.CourseDto;
 import org.motechproject.whp.mtraining.dto.MessageDto;
-import org.motechproject.whp.mtraining.dto.ModuleDto;
 import org.motechproject.whp.mtraining.dto.QuestionDto;
 import org.motechproject.whp.mtraining.dto.QuizDto;
 
@@ -16,14 +15,7 @@ public enum ContentType {
         @Override
         public CourseDto toDto(String nodeName, String description, String fileName, boolean isActive, Integer numberOfQuizQuestions,
                                List<String> options, String correctAnswer, String correctAnswerFileName, Double passPercentage, List<Object> childDtos, String contentAuthor) {
-            return new CourseDto(isActive, nodeName, description, fileName, contentAuthor, (List<ModuleDto>) (Object) childDtos);
-        }
-    },
-    MODULE {
-        @Override
-        public ModuleDto toDto(String nodeName, String description, String fileName, boolean isActive, Integer numberOfQuizQuestions,
-                               List<String> options, String correctAnswer, String correctAnswerFileName, Double passPercentage, List<Object> childDtos, String contentAuthor) {
-            return new ModuleDto(isActive, nodeName, description, fileName, contentAuthor, (List<ChapterDto>) (Object) childDtos);
+            return new CourseDto(isActive, nodeName, description, fileName, contentAuthor);
         }
     },
     CHAPTER {

@@ -19,23 +19,20 @@ import java.util.UUID;
 public class CourseDto extends ContentDto {
     private String name;
     private String description;
-    private List<ModuleDto> modules;
 
     public CourseDto() {
     }
 
-    public CourseDto(boolean isActive, String name, String description, String externalId, String createdBy, List<ModuleDto> modules) {
+    public CourseDto(boolean isActive, String name, String description, String externalId, String createdBy) {
         super(isActive, externalId, createdBy);
         this.name = name;
         this.description = description;
-        this.modules = modules;
     }
 
-    public CourseDto(UUID contentId, Integer version, boolean isActive, String name, String description, String externalId, String createdBy, List<ModuleDto> modules) {
+    public CourseDto(UUID contentId, Integer version, boolean isActive, String name, String description, String externalId, String createdBy) {
         super(contentId, version, isActive, externalId, createdBy);
         this.name = name;
         this.description = description;
-        this.modules = modules;
     }
 
     public String getName() {
@@ -44,29 +41,5 @@ public class CourseDto extends ContentDto {
 
     public String getDescription() {
         return description;
-    }
-
-    public List<ModuleDto> getModules() {
-        return modules;
-    }
-
-    public ModuleDto firstActiveModule() {
-        return findFirstActive(modules);
-    }
-
-    public ModuleDto lastActiveModule() {
-        return findLastActive(modules);
-    }
-
-    public ModuleDto getModule(UUID moduleId) {
-        return findWithContentId(moduleId, modules);
-    }
-
-    public ModuleDto getNextActiveModuleAfter(UUID moduleId) {
-        int position = findPosition(moduleId, modules);
-        if (position == -1 || position + 1 == modules.size()) {
-            return null;
-        }
-        return findFirstActive(modules.subList(position + 1, modules.size()));
     }
 }
