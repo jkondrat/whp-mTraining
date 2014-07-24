@@ -1,9 +1,6 @@
 package org.motechproject.whp.mtraining.builder;
 
-import org.motechproject.mtraining.domain.Bookmark;
-import org.motechproject.mtraining.domain.Chapter;
-import org.motechproject.mtraining.domain.Course;
-import org.motechproject.mtraining.domain.Lesson;
+import org.motechproject.mtraining.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,19 +35,19 @@ public class BookmarkLessonUpdater {
      * @return
      */
     public Bookmark update(Bookmark bookmark, Course course, Chapter chapter) {
+        //Lesson lesson = chapter.getLessons(bookmark.getLessonIdentifier());
         Lesson lesson = chapter.getLessons().get(Integer.parseInt(bookmark.getLessonIdentifier()));
         String externalId = bookmark.getExternalId();
         if (lesson == null) {
             return courseBookmarkBuilder.buildBookmarkFromFirstActiveContent(externalId, course, chapter);
         }
-        //if (!lesson.isActive()) {
-        if (lesson != null) {
-            //Lesson nextActiveLesson = chapter.getNextActiveLessonAfter((int)lesson.getId());
-            Lesson nextActiveLesson = chapter.getLessons().get(0);
-            if (nextActiveLesson != null) {
+        if (lesson.getState() == CourseUnitState.Active) {
+            int position = BuilderHelper.findPosition(lesson.getId(), chapter.getLessons());
+            if (position != -1 && position + 1 != chapter.getLessons().size()) {
+                Lesson nextActiveLesson = BuilderHelper.findFirstActive(chapter.getLessons().subList(position + 1, chapter.getLessons().size()));
                 return courseBookmarkBuilder.buildBookmarkFrom(externalId, course, chapter, nextActiveLesson);
             }
-
+            
             //if (chapter.hasActiveQuiz()) {
             //    return courseBookmarkBuilder.buildBookmarkFrom(externalId, course, chapter, chapter.getQuiz());
             //}

@@ -30,8 +30,8 @@ public class BookmarkBuilder {
      * @return
      */
     public Bookmark buildBookmarkFromFirstActiveContent(String externalId, Course course) {
-        //return buildBookmarkFromFirstActiveContent(externalId, course, course.firstActiveChapter());
-        return buildBookmarkFromFirstActiveContent(externalId, course, course.getChapters().get(0));
+        Chapter chapter = BuilderHelper.findFirstActive(course.getChapters());
+        return buildBookmarkFromFirstActiveContent(externalId, course, chapter);
     }
 
     /**
@@ -46,9 +46,7 @@ public class BookmarkBuilder {
         if (chapter == null) {
             return null;
         }
-        
-        //Lesson firstActiveLesson = chapter.findFirstActiveLesson();
-        Lesson firstActiveLesson = chapter.getLessons().get(0);
+        Lesson firstActiveLesson = BuilderHelper.findFirstActive(chapter.getLessons());
         if (firstActiveLesson != null) {
             return buildBookmarkFrom(externalId, course, chapter, firstActiveLesson);
         }
@@ -107,10 +105,8 @@ public class BookmarkBuilder {
      * @return
      */
     public Bookmark buildBookmarkFromLastActiveContent(String externalId, Course course) {
-        //Chapter lastActiveChapter = course.lastActiveChapter();
-        Chapter lastActiveChapter = course.getChapters().get(0);
-        //Lesson lastActiveLesson = lastActiveChapter.lastActiveLesson();
-        Lesson lastActiveLesson = lastActiveChapter.getLessons().get(0);
+        Chapter lastActiveChapter = BuilderHelper.findLastActive(course.getChapters());
+        Lesson lastActiveLesson = BuilderHelper.findLastActive(lastActiveChapter.getLessons());
         if (lastActiveLesson != null) {
             //if (lastActiveChapter.hasActiveQuiz()) {
             if (lastActiveChapter.getQuiz() != null) {

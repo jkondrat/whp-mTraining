@@ -12,7 +12,7 @@
         <motech.version>0.24-SNAPSHOT</motech.version>
         <yui.compress.dir>${project.build.directory}/yui-compress/</yui.compress.dir>
         <postgres.host>localhost</postgres.host>
-        <postgres.port>5432</postgres.port>
+        <postgres.port>5433</postgres.port>
         <postgres.user>postgres</postgres.user>
         <postgres.password>password</postgres.password>
         <spring.version>3.1.0.RELEASE</spring.version>
