@@ -1,15 +1,21 @@
 package org.motechproject.whp.mtraining.service.impl;
 
 import org.hamcrest.core.Is;
-import org.junit.Before;
+import org.hamcrest.core.IsNull;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.motechproject.testing.osgi.BasePaxIT;
+import org.motechproject.testing.osgi.container.MotechNativeTestContainerFactory;
 import org.motechproject.whp.mtraining.domain.Location;
 import org.motechproject.whp.mtraining.domain.Provider;
 import org.motechproject.whp.mtraining.web.domain.ProviderStatus;
 import org.motechproject.whp.mtraining.web.domain.ResponseStatus;
+import org.ops4j.pax.exam.ExamFactory;
+import org.ops4j.pax.exam.junit.PaxExam;
+import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
+import org.ops4j.pax.exam.spi.reactors.PerSuite;
+
+import javax.inject.Inject;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -19,16 +25,13 @@ import static org.mockito.Mockito.when;
 import static org.motechproject.whp.mtraining.web.domain.ResponseStatus.NOT_WORKING_PROVIDER;
 import static org.motechproject.whp.mtraining.web.domain.ResponseStatus.UNKNOWN_PROVIDER;
 
-@RunWith(MockitoJUnitRunner.class)
-public class ProviderServiceImplTest {
+@RunWith(PaxExam.class)
+@ExamReactorStrategy(PerSuite.class)
+@ExamFactory(MotechNativeTestContainerFactory.class)
+public class ProviderServiceImplIT extends BasePaxIT {
 
-
+    @Inject
     private ProviderServiceImpl providerService;
-
-    @Before
-    public void setUp() {
-        providerService = new ProviderServiceImpl();
-    }
 
     @Test
     public void shouldAddProvider() {
@@ -72,4 +75,36 @@ public class ProviderServiceImplTest {
         verify(providerService).getProviderByCallerId(callerId);
         assertEquals(response, NOT_WORKING_PROVIDER);
     }
+
+    @Test
+    public void shouldAddAndRetrieveAProvider() {
+        String remediId = "remedix";
+        assertThat(providerService.getProviderByRemediId(remediId), IsNull.nullValue());
+        Provider provider = new Provider(remediId, 717777L, ProviderStatus.WORKING_PROVIDER, new Location("block", "district", "state"));
+
+        providerService.createProvider(provider);
+
+        Provider savedProvider = providerService.getProviderByRemediId(remediId);
+        assertThat(savedProvider, IsNull.notNullValue());
+        assertThat(savedProvider.getCallerId(), Is.is(717777L));
+    }
+
+    @Test
+    public void shouldUpdateAndRetrieveAProvider() {
+        long callerId = 7657667L;
+        long callerIdNew = 7653333L;
+        String remediId = "remediId";
+
+        Provider oldProvider = new Provider(remediId, callerId, ProviderStatus.WORKING_PROVIDER, new Location("block", "district", "state"));
+        providerService.createProvider(oldProvider);
+
+        Provider newProvider = new Provider(remediId, callerIdNew, ProviderStatus.WORKING_PROVIDER, new Location("block", "district", "state"));
+        providerService.createProvider(newProvider);
+
+        Provider savedProvider = providerService.getProviderByRemediId(remediId);
+        assertThat(savedProvider, IsNull.notNullValue());
+        assertThat(savedProvider.getRemediId(), Is.is(remediId));
+        assertThat(savedProvider.getCallerId(), Is.is(callerIdNew));
+    }
+
 }

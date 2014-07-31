@@ -1,46 +1,45 @@
 package org.motechproject.whp.mtraining.service.impl;
 
-import org.hamcrest.core.Is;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.motechproject.mtraining.domain.Chapter;
 import org.motechproject.mtraining.domain.Course;
 import org.motechproject.mtraining.domain.CourseUnitState;
 import org.motechproject.mtraining.domain.Lesson;
 import org.motechproject.mtraining.service.MTrainingService;
+import org.motechproject.testing.osgi.BasePaxIT;
+import org.motechproject.testing.osgi.container.MotechNativeTestContainerFactory;
 import org.motechproject.whp.mtraining.service.CourseConfigurationService;
 import org.motechproject.security.model.UserDto;
 import org.motechproject.security.service.MotechUserService;
 import org.motechproject.whp.mtraining.csv.request.CourseCsvRequest;
+import org.ops4j.pax.exam.ExamFactory;
+import org.ops4j.pax.exam.junit.PaxExam;
+import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
+import org.ops4j.pax.exam.spi.reactors.PerSuite;
 
+import javax.inject.Inject;
 import java.util.List;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class CourseImportServiceTest {
+@RunWith(PaxExam.class)
+@ExamReactorStrategy(PerSuite.class)
+@ExamFactory(MotechNativeTestContainerFactory.class)
+public class CourseImportServiceIT extends BasePaxIT {
     private CourseImportService courseImportService;
 
-    @Mock
+    @Inject
     private MTrainingService mTrainingService;
-    @Mock
+    @Inject
     private MotechUserService motechUserService;
-    @Mock
+    @Inject
     private CourseConfigurationService courseConfigService;
-
-    @Before
-    public void setUp() throws Exception {
-        courseImportService = new CourseImportService();
-    }
 
     @Test
     public void shouldInvokeCourseServiceToAddACourseEventuallyByConstructingContentTree() {
@@ -55,9 +54,9 @@ public class CourseImportServiceTest {
                 new CourseCsvRequest("lesson5", "lesson", CourseUnitState.Inactive, "chapter2", "lesson5 description", "filename4")
         );
         
-        UserDto userDTo = mock(UserDto.class);
-        when(userDTo.getUserName()).thenReturn("Superman");
-        when(motechUserService.getCurrentUser()).thenReturn(userDTo);
+        UserDto userDto = mock(UserDto.class);
+        when(userDto.getUserName()).thenReturn("Superman");
+        when(motechUserService.getCurrentUser()).thenReturn(userDto);
 
         courseImportService.importCoursePlan(requests);
 

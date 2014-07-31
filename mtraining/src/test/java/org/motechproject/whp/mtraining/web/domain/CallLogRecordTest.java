@@ -42,7 +42,7 @@ public class CallLogRecordTest {
     @Test
     public void shouldValidateValidInvalidCallLogRecordWithInvalidTime() {
         DateTime now = ISODateTimeUtil.nowInTimeZoneUTC();
-        CallLogRecord invalidCallLogRecord = new CallLogRecord(123L, 1, "MESSAGE", now.toString(), "31-31-2014T00:00:00.000Z");
+        CallLogRecord invalidCallLogRecord = new CallLogRecord(123L, 1, "LESSON", now.toString(), "31-31-2014T00:00:00.000Z");
         List<ValidationError> validationErrors = invalidCallLogRecord.validate();
         assertThat(validationErrors.size(), Is.is(1));
         assertTrue(validationErrors.contains(new ValidationError(INVALID_DATE_TIME)));
