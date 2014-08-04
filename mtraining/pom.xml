@@ -311,12 +311,15 @@
                             org.motechproject.whp.mtraining.repository;version=${project.version},
                             org.motechproject.whp.mtraining.reports.domain;version=${project.version},
                             org.motechproject.whp.mtraining.csv.domain;version=${project.version},
+                            org.motechproject.whp.mtraining.csv.request;version=${project.version},
                             org.motechproject.whp.mtraining.domain;version=${project.version},
                             org.motechproject.whp.mtraining.service;version=${project.version},
                             org.motechproject.whp.mtraining.service.impl;version=${project.version},
                             org.motechproject.whp.mtraining.web.domain;version=${project.version},
-                            org.motechproject.whp.mtraining.csv.request;version=${project.version},
-                            org.motechproject.whp.mtraining.reports;version=${project.version}
+                            org.motechproject.whp.mtraining.reports;version=${project.version},
+                            org.motechproject.whp.mtraining.ivr;version=${project.version},
+                            org.motechproject.whp.mtraining;version=${project.version},
+                            org.motechproject.testing.utils.WaitCondition;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             org.motechproject.server.config;version=${motech.version},
