@@ -196,7 +196,7 @@
         }
 
         $scope.deleteModule = function() {
-            jConfirm($scope.msg('mtraining.confirm.remove', $scope.msg('mtraining.moduleWhp'), $scope.module.name), $scope.msg('mtraining.confirm.remove.header'), function (val) {
+            jConfirm($scope.msg('mtraining.confirm.remove', $scope.msg('mtraining.module'), $scope.module.name), $scope.msg('mtraining.confirm.remove.header'), function (val) {
                 if (val) {
                     $scope.savingModule = true;
                     $scope.module.$delete({ id:$scope.module.id }, function () {
@@ -220,19 +220,75 @@
         $scope.clearModule();
     }]);
 
-    controllers.controller('chaptersController', ['$scope', 'Chapter', function ($scope, Chapter) {
+    controllers.controller('chaptersController', ['$scope', 'Chapter', 'Module', 'Course', function ($scope, Chapter, Module, Course) {
+
+        $.getJSON('../mtraining/web-api/courses', function(data) {
+            $scope.courses = data;
+            $.getJSON('../mtraining/web-api/modules', function(data) {
+                $scope.modules = data;
+                $scope.$apply();
+            });
+        });
 
         $scope.clearChapter = function() {
             $scope.creatingChapter = false;
             $scope.updatingChapter = false;
             $scope.savingChapter = false;
+            $scope.selectedCourse = undefined;
+            $scope.selectedModule = undefined;
             $scope.createChapter();
         }
+
+        $(document).on('click', '#courses li a', function () {
+            var idx = $(this).attr("idx");
+            $scope.selectedCourse = $scope.courses[idx];
+            $scope.selectedCourseIdx = idx;
+            $scope.$apply();
+        });
+
+        $(document).on('click', '#modules li a', function () {
+            var idx = $(this).attr("idx");
+            $scope.selectedModule = $scope.modules[idx];
+            $scope.selectedModuleIdx = idx;
+            $scope.$apply();
+        })
+
+        $scope.isChild = function(module) {
+            if ($scope.selectedCourse != undefined) {
+                var isChild = false;
+                $.each($scope.selectedCourse.courses, function(i, course) {
+                    if (module.id == course.id) {
+                        isChild = true;
+                        return false;
+                    }
+                });
+            }
+            return isChild;
+        };
 
         $scope.$on('chapterClick', function(event, chapterId) {
             $scope.alertMessage = undefined;
             $scope.errorName = undefined;
-            $scope.chapter = Chapter.get({ id: chapterId });
+            $scope.chapter = Chapter.get({ id: chapterId }, function () {
+                $.each($scope.modules, function(i, module) {
+                    $.each(module.chapters, function(j, chapter) {
+                        if(chapter.id == $scope.chapter.id) {
+                            $scope.selectedModule = module;
+                            return false;
+                        }
+                    });
+                });
+            });
+            if ($scope.selectedModule != undefined) {
+                $.each($scope.courses, function(i, course) {
+                    $.each(course.modules, function(j, module) {
+                        if(module.id == $scope.selectedModule.id) {
+                            $scope.selectedCourse = course;
+                            return false;
+                        }
+                    });
+                });
+            }
             $scope.updatingChapter = true;
             $scope.creatingChapter = false;
         });
@@ -250,12 +306,28 @@
             }
             $scope.savingChapter = true;
             $scope.chapter.state = 'Inactive';
-            $scope.chapter.$save(function(c) {
-                // c => saved chapter object
-                $scope.alertMessage = $scope.msg('mtraining.createdChapter');
-                $("#chaptersListTable").setGridParam({datatype:'json'}).trigger('reloadGrid');
-            });
-            $scope.clearChapter();
+            if ($scope.selectedModule != undefined) {
+                Module.get({ id: $scope.selectedModule.id }, function (module) {
+                    if (module.chapters == undefined) {
+                        module.chapters = [];
+                    }
+                    module.chapters.push($scope.chapter);
+                    module.$update({ id: module.id }, function (m) {
+                        // m => updated module object
+                        $scope.modules[$scope.selectedModuleIdx] = m;
+                        $scope.clearChapter();
+                        $scope.alertMessage = $scope.msg('mtraining.createdChapter');
+                    });
+                });
+            }
+            else {
+                $scope.chapter.$save(function(c) {
+                    // c => saved chapter object
+                    $scope.clearChapter();
+                    $scope.alertMessage = $scope.msg('mtraining.createdChapter');
+                });
+            }
+            $("#chaptersListTable").setGridParam({datatype:'json'}).trigger('reloadGrid');
         }
 
         $scope.updateChapter = function() {
@@ -263,12 +335,28 @@
                 return;
             }
             $scope.savingChapter = true;
-            $scope.chapter.$update({ id:$scope.chapter.id }, function (c) {
-                // c => updated chapter object
-                $scope.alertMessage = $scope.msg('mtraining.updatedChapter');
-                $("#chaptersListTable").setGridParam({datatype:'json'}).trigger('reloadGrid');
-            });
-            $scope.clearChapter();
+            if ($scope.selectedModule != undefined) {
+                Module.get({ id: $scope.selectedModule.id }, function (module) {
+                    if (module.chapters == undefined) {
+                        module.chapters = [];
+                    }
+                    module.chapters.push($scope.chapter);
+                    module.$update({ id: module.id }, function (m) {
+                        // m => updated module object
+                        $scope.modules[$scope.selectedModuleIdx] = m;
+                        $scope.clearChapter();
+                        $scope.alertMessage = $scope.msg('mtraining.createdChapter');
+                    });
+                });
+            }
+            else {
+                $scope.chapter.$update({ id:$scope.chapter.id }, function (c) {
+                    // c => updated chapter object
+                    $scope.clearChapter();
+                    $scope.alertMessage = $scope.msg('mtraining.updatedChapter');
+                });
+            }
+            $("#chaptersListTable").setGridParam({datatype:'json'}).trigger('reloadGrid');
         }
 
         $scope.deleteChapter = function() {
@@ -302,6 +390,7 @@
             $scope.creatingMessage = false;
             $scope.updatingMessage = false;
             $scope.savingMessage = false;
+            $scope.createMessage();
         }
 
         $scope.$on('messageClick', function(event, messageId) {
